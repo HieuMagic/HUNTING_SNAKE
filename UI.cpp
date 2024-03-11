@@ -1,43 +1,83 @@
 ﻿#include "UI.h"
 #include "console.h"
 #include <conio.h>
-
+#include <iostream>
+//haha
 #pragma comment(lib, "winmm.lib")
 
 const char* GAME_TITLE = "HUNGTING SNAKE";
-extern bool Playgame;
+extern bool playing;
 
 
-void soundtrack(bool& status)
+static void HUNTING_SNAKE()
+{
+    int x, y;
+    x = 0; y = 0;
+}
+void soundTrack(bool& status)
 {
     const char* filePath = "C:/Users/DELL/Downloads/musix.wav";
     PlaySoundA(filePath, NULL, SND_FILENAME | SND_ASYNC);
 }
-
-void soudplay(bool& status)
+void soudPlay(bool& status)
 {
-}
 
-void Init()
+}
+void fillFullScreen(int color)
+{
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
+    GetConsoleScreenBufferInfo(hConsole, &consoleInfo);
+    int consoleWidth = consoleInfo.srWindow.Right - consoleInfo.srWindow.Left + 1;
+    int consoleHeight = consoleInfo.srWindow.Bottom - consoleInfo.srWindow.Top + 1;
+    
+    setBackgroudAndText(color);
+    for (int i = 0; i < consoleHeight; i++)
+    {
+        for (int j = 0; j < consoleWidth; j++)
+        {
+			std::cout << " ";
+		}
+	}
+}
+void button(int colorBackgroud, int colorText, const char* text, int wight, int height)
+{
+    setBackgroudAndText(colorBackgroud | colorText);
+    
+    int distance = wight / 2 - strlen(text) / 2;
+    for (int i = 0; i < height; i++)
+    {
+        gotoXY(10, i);
+        for (int j = 0; j < wight; j++)
+        {
+            if (i == (height / 2 + 1) && j >= distance && j < (wight - distance))
+            {
+                std::cout << text[j - distance];
+            }
+            else std::cout << " ";
+		}
+	}
+}
+void init()
 {
     ShowWindow(GetConsoleWindow(), SW_MAXIMIZE);// toàn màng hình
-    DisableResizeWindow();// vô hiệu hóa nút resize console
-    DisableCtrButton(false, false, false);// vô hiệu hóa nút close, minimize, maximize
-    ShowScrollbar(FALSE);//ẩn thanh cuộn
-
+    //DisableResizeWindow();// vô hiệu hóa nút resize console
+    //DisableCtrButton(false, false, false);// vô hiệu hóa nút close, minimize, maximize
+    //ShowScrollbar(FALSE);//ẩn thanh cuộn
 }
-void StartGame()
+void startGame()
 {
+    const int FONT_START = 20;
 
 }
-void EndGame()
+void endGame()
 {
     while (true) {
         if (_kbhit()) {
             char key = _getch();
             if (key == 'q') 
             {
-                Playgame = false;
+                playing = false;
                 break;
             }
         }

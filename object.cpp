@@ -32,6 +32,38 @@ snake::~snake()
 {
 	delete[] body;
 }
+door::door()
+{
+	srand(time(NULL));
+	kernel.x = rand() % (FOOD_SIZE - 1) + 1;
+	kernel.y = rand() % (FOOD_SIZE - 1) + 1;
+	wall[0].x = kernel.x - 1; wall[0].y = kernel.y - 1;
+	wall[1].x = kernel.x - 1; wall[1].y = kernel.y;
+	wall[2].x = kernel.x - 1; wall[2].y = kernel.y + 1;
+	wall[3].x = kernel.x; wall[3].y = kernel.y - 1;
+	wall[4].x = kernel.x; wall[4].y = kernel.y + 1;
+
+	gotoXY(kernel.x, kernel.y);
+	std::cout << " ";
+	for (int i = 0; i < 5; i++)
+	{
+		gotoXY(wall[i].x, wall[i].y);
+		std::cout << " ";
+	}
+}
+door::~door()
+{
+	delete[] wall;
+}
+
+bool operator==(point a, point b)
+{
+	if (a.x == b.x && a.y == b.y)
+	{
+		return true;
+	}
+	return false;
+}
 
 void eatFood(snake& snake, food food)
 {
@@ -76,14 +108,14 @@ void drawSnake(const snake& snake)
 		Sleep(speed);
 	}
 }
-void impactWall(snake& snake, int width, int height, bool& isImpact)
+void impactWall(const snake& snake, int width, int height, bool& isImpact)
 {
 	if (snake.body[0].x == 0 || snake.body[0].x == width - 1 || snake.body[0].y == 0 || snake.body[0].y == height - 1)
 	{
 		isImpact = true;
 	}
 }
-void impactItself(snake& snake, bool& isImpact)
+void impactItself(const snake& snake, bool& isImpact)
 {
 	point head = snake.body[0];
 	for (int i = 1; i < snake.length; i++)
@@ -95,4 +127,69 @@ void impactItself(snake& snake, bool& isImpact)
 		}
 	}
 }
+void impactDoor(const snake& snake, const door& door, bool& isImpact, bool& next)
+{
+	point head = snake.body[0];
 
+	if (head == door.kernel)
+	{
+		next = true;
+		return;
+	}
+	for (int i = 0; i < 5; i++)
+	{
+		if (head == door.wall[i])
+		{
+			isImpact = true;
+			break;
+		}
+	}
+}
+
+namespace level_1
+{
+	struct obstacle
+	{
+
+	};
+}
+
+namespace level_2
+{
+	struct obstacle
+	{
+
+	};
+}
+
+namespace level_3
+{
+	struct obstacle
+	{
+
+	};
+}
+
+namespace level_4
+{
+	struct obstacle
+	{
+
+	};
+	struct monster
+	{
+
+	};
+}
+
+namespace level_5
+{
+	struct obstacle
+	{
+
+	};
+	struct monster
+	{
+
+	};
+}

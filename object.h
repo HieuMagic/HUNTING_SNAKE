@@ -17,6 +17,7 @@ enum direction {
 };
 struct point {
 	int x, y;
+	friend bool operator==(point a, point b);
 };
 struct food
 {
@@ -33,11 +34,29 @@ struct snake
 	void updateLength();//hàm c?p nh?t chi?u dài r?n
 	~snake();//hàm xóa r?n
 };
+struct door
+{
+	point kernel;
+	point wall[5];
+	door();
+	~door();
+	//00
+	//01
+	//00
+};
 
 void eatFood(snake& snake, food food);//hàm ?n th?c ?n
 void moveSnake(snake& snake, direction direction);//hàm di chuy?n r?n
 void drawSnake(const snake& snake);//hàm v? r?n
-void impactWall(snake& snake, int width, int height, bool& isImpact);//hàm va ch?m v?i t??ng
-void impactItself(snake& snake, bool& isImpact);//hàm va ch?m v?i chính nó
+void impactWall(const snake& snake, int width, int height, bool& isImpact);//hàm va ch?m v?i t??ng
+void impactItself(const snake& snake, bool& isImpact);//hàm va ch?m v?i chính nó
+void impactDoor(const snake& snake, const door& door, bool& isImpact, bool& next);//hàm va ch?m v?i c?a
+
+
+namespace level_1
+{
+	struct obstacle;
+
+}
 
 #endif // !_MY_OBJECT

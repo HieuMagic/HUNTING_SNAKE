@@ -1,11 +1,11 @@
 ﻿#include "console.h"
 
-void DisableResizeWindow()
+void disableResizeWindow()
 {
     HWND hWnd = GetConsoleWindow();
     SetWindowLong(hWnd, GWL_STYLE, GetWindowLong(hWnd, GWL_STYLE) & ~WS_SIZEBOX);
 }
-void DisableCtrButton(bool Close, bool Min, bool Max)
+void disableCtrButton(bool Close, bool Min, bool Max)
 {
     HWND hWnd = GetConsoleWindow();
     HMENU hMenu = GetSystemMenu(hWnd, false);
@@ -23,7 +23,7 @@ void DisableCtrButton(bool Close, bool Min, bool Max)
         DeleteMenu(hMenu, SC_MAXIMIZE, MF_BYCOMMAND);
     }
 }
-void ShowScrollbar(BOOL Show)
+void showScrollbar(BOOL Show)
 {
     HWND hWnd = GetConsoleWindow();
     ShowScrollBar(hWnd, SB_BOTH, Show);
@@ -40,12 +40,16 @@ void gotoXY(int x, int y) {
     hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleCursorPosition(hConsoleOutput, Cursor_an_Pos);
 }
-void GetConsoleSize(int& width, int& height) {
+void getConsoleSize(int& width, int& height) {
     HWND console = GetConsoleWindow();
     RECT rect;
     GetWindowRect(console, &rect);
     width = rect.right - rect.left;
     height = rect.bottom - rect.top;
+}
+void setBackgroudAndText(int code) {
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, code);
 }
 void setConsoleTextColor(int color) {
     HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -54,6 +58,9 @@ void setConsoleTextColor(int color) {
 void setConsoleTextColor(int background, int text) {
     int color = (background << 4) | text;
     setConsoleTextColor(color);
+}
+void setBackgroundColor(int color) {
+	setConsoleTextColor(color << 4, color);
 }
 void getCursorPosition(int& x, int& y) {
     CONSOLE_SCREEN_BUFFER_INFO csbi;
@@ -80,7 +87,7 @@ void setCursorSize(int size) {
     Info.dwSize = size;
     SetConsoleCursorInfo(consoleHandle, &Info);
 }
-void Nonecursortype()
+void noneCursorType()
 {
     CONSOLE_CURSOR_INFO Info;
     Info.bVisible = FALSE;
@@ -109,14 +116,14 @@ void setConsoleIcon(const char* iconPath)
     SendMessageA(console, WM_SETICON, ICON_SMALL, (LPARAM)icon);
     SendMessageA(console, WM_SETICON, ICON_BIG, (LPARAM)icon);
 }
-void DisableSelection()
+void disableSelection()
 {
     HANDLE hOutput = GetStdHandle(STD_OUTPUT_HANDLE);
     DWORD prev_mode;
     GetConsoleMode(hOutput, &prev_mode);
     SetConsoleMode(hOutput, prev_mode | ENABLE_QUICK_EDIT_MODE | ENABLE_EXTENDED_FLAGS);
 }
-void GetMousePosConsole(MOUSE_EVENT_RECORD mer, int& x, int& y)
+void getMousePosConsole(MOUSE_EVENT_RECORD mer, int& x, int& y)
 {
     INPUT_RECORD Inrec;
     DWORD eventRead;
