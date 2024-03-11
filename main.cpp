@@ -227,16 +227,15 @@ void getConsoleFont() {
 
 int main()
 {
-	//init();
-    //setFontSize(20,20);
-	//fillFullScreen(0x30);
-	//gotoXY(20, 10);
-    //setBackgroudAndText(0x35);
-    //SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x1235);
-	//button(0xc0,0x08, "HUNTING SNAKE", 25, 25);
-    //std::cout << "HUNTING SNAKE";
-    //endGame();
-
+	init();
+    setFontSize(20,20);
+	fillFullScreen(0x30);
+	gotoXY(20, 10);
+    setBackgroudAndText(0x35);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x1235);
+    std::cout << "HUNTING SNAKE";
+    endGame();
+    
 
 	return 0;
 }

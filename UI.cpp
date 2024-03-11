@@ -40,24 +40,7 @@ void fillFullScreen(int color)
 		}
 	}
 }
-void button(int colorBackgroud, int colorText, const char* text, int wight, int height)
-{
-    setBackgroudAndText(colorBackgroud | colorText);
-    
-    int distance = wight / 2 - strlen(text) / 2;
-    for (int i = 0; i < height; i++)
-    {
-        gotoXY(10, i);
-        for (int j = 0; j < wight; j++)
-        {
-            if (i == (height / 2 + 1) && j >= distance && j < (wight - distance))
-            {
-                std::cout << text[j - distance];
-            }
-            else std::cout << " ";
-		}
-	}
-}
+
 void init()
 {
     ShowWindow(GetConsoleWindow(), SW_MAXIMIZE);// toàn màng hình
