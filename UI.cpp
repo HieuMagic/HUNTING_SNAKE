@@ -1,7 +1,7 @@
 ﻿#include "UI.h"
 #include "console.h"
 #include <conio.h>
-
+//check check check
 #pragma comment(lib, "winmm.lib")
 
 const char* GAME_TITLE = "HUNGTING SNAKE";
